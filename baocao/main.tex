@@ -41,7 +41,16 @@
 
 
 \chapter{Phép biến đổi Wavelets và xử lý đa phân giải}
-\section{Giới thiệu về phép biến đổi Wavelets và xử lý đa phân giải}
+\section{Giới thiệu về phép biến đổi Wavelets và xử lý đa phân giải} 
+
+Wavelet transform là phép biến đổi tín hiệu dùng các hàm “sóng nhỏ” có hỗ trợ hữu hạn và tích phân bằng 0, cho phép phân tích tín hiệu theo cả thời gian lẫn tần số. Khác với Fourier chỉ dùng $\sin \cos$ cố định, wavelet cung cấp họ hàm được co giãn và tịnh tiến, nên rất phù hợp với tín hiệu không ổn định (transient).
+
+Biểu diễn wavelet thu được các hệ số ở từng mức tần số (scale), mỗi hệ số cho biết mức đóng góp của wavelet cụ thể vào tín hiệu. Biến đổi liên tục (CWT) dùng mọi hệ số co giãn/tịnh tiến, còn biến đổi rời rạc (DWT) chọn hệ số theo lưới dyadic để có biểu diễn gọn, thuận lợi cho xử lý số.
+
+Xử lý đa phân giải (multiresolution analysis – MRA) khai thác việc tách tín hiệu thành các thành phần thô (approximation) và chi tiết ở nhiều tầng. Mỗi tầng dùng hai bộ lọc: low-pass để giữ thông tin tổng quan, high-pass để bắt chi tiết; qua phép lấy mẫu xuống (down-sampling) ta có biểu diễn kim tự tháp.
+
+MRA chuẩn sử dụng không gian con lồng nhau ( $\dots \subset V_{-1} \subset V_0 \subset V_1 \subset \dots$ ) với hàm tỉ lệ (scaling function) sinh ra ($V_0$) và hàm wavelet sinh không gian chi tiết ($W_j$). Điều này giúp xây dựng DWT bằng các bộ lọc tứ phân (quadrature mirror filters).
+
 
 \section{Nền tảng phép biến đổi Wavelets}
 
