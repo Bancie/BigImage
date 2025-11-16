@@ -43,7 +43,7 @@
 \chapter{Phép biến đổi Wavelets và xử lý đa phân giải}
 \section{Giới thiệu về phép biến đổi Wavelets và xử lý đa phân giải} 
 
-Wavelet transform là phép biến đổi tín hiệu dùng các hàm “sóng nhỏ” có hỗ trợ hữu hạn và tích phân bằng 0, cho phép phân tích tín hiệu theo cả thời gian lẫn tần số. Khác với Fourier chỉ dùng $\sin \cos$ cố định, wavelet cung cấp họ hàm được co giãn và tịnh tiến, nên rất phù hợp với tín hiệu không ổn định (transient).
+Phép biến đổi Wavelet là phép biến đổi tín hiệu dùng các hàm “sóng nhỏ” có hỗ trợ hữu hạn và tích phân bằng 0, cho phép phân tích tín hiệu theo cả thời gian lẫn tần số. Khác với Fourier chỉ dùng $\sin \cos$ cố định, wavelet cung cấp họ hàm được co giãn và tịnh tiến, nên rất phù hợp với tín hiệu không ổn định (transient).
 
 Biểu diễn wavelet thu được các hệ số ở từng mức tần số (scale), mỗi hệ số cho biết mức đóng góp của wavelet cụ thể vào tín hiệu. Biến đổi liên tục (CWT) dùng mọi hệ số co giãn/tịnh tiến, còn biến đổi rời rạc (DWT) chọn hệ số theo lưới dyadic để có biểu diễn gọn, thuận lợi cho xử lý số.
 
@@ -54,14 +54,50 @@ MRA chuẩn sử dụng không gian con lồng nhau ( $\dots \subset V_{-1} \sub
 
 \section{Nền tảng phép biến đổi Wavelets}
 
-\subsection{Ảnh cơ sở của phép biến đổi Wavelets}
+\subsection{Ảnh cơ sở}
 \subsubsection*{Hàm cơ sở}
+
+\begin{equation}
+    \psi_{s,\tau}(t) = 2^{s/2}\,\psi(2^{s} t - \tau)
+\end{equation}
+
 \subsubsection*{Ảnh cơ sở}
+
+\begin{equation}
+    \mathbf{F} = \sum _{u=0}^{N-1} \sum _{v=0}^{N-1} T(u,v) \mathbf{S} _{u,v}
+\end{equation}
+
+trong đó,
+
+\begin{equation}
+\mathbf{S}_{u,v} =
+\begin{bmatrix}
+s(0,0,u,v)   & s(0,1,u,v)   & \cdots & s(0,N-1,u,v) \\
+s(1,0,u,v)   & s(1,1,u,v)   & \cdots & s(1,N-1,u,v) \\
+\vdots       & \vdots       & \ddots & \vdots       \\
+s(N-1,0,u,v) & s(N-1,1,u,v) & \cdots & s(N-1,N-1,u,v)
+\end{bmatrix}
+\end{equation}
+
+
 \subsection{Các ảnh cơ sở phổ biến}
-\subsubsection*{Phép biến đổi có liên hệ với Fourier}
 \subsubsection*{Phép biến đổi Walsh-Hadamard}
+
+\begin{equation}
+    s(x,u) = \frac{1}{\sqrt{N}}\,(-1)^{\sum_{i=0}^{n-1} b_i(x)b_i(u)}
+\end{equation}
+
 \subsubsection*{Phép biến đổi Slant}
+
+\begin{equation}
+    \mathbf{A}_{\mathrm{S1}} = \frac{1}{\sqrt{N}}\, \mathbf{S}_N
+\end{equation}
+
 \subsubsection*{Phép biến đổi Haar}
+
+\begin{equation}
+    s(x,u) = \frac{1}{\sqrt{N}}\, h_u(x/N) \quad \text{với } x = 0,1,\ldots,N-1
+\end{equation}
 
 \subsection{Cấu trúc phép biến đổi Wavelets}
 \subsubsection*{Hàm tỉ lệ}
@@ -78,7 +114,17 @@ MRA chuẩn sử dụng không gian con lồng nhau ( $\dots \subset V_{-1} \sub
 
 \section{Cơ chế phép biến đổi Wavelets và xử lý đa phân giải}
 \subsection{Khai triển chuỗi Wavelets}
+
+\begin{equation}
+    f(x)=\sum_{k} c_{j_0}(k)\,\varphi_{j_0,k}(x) + \sum_{j=j_0}^{\infty} \sum_{k} d_j(k)\,\psi_{j,k}(x)
+\end{equation}
+
 \subsection{Phép biến đổi Wavelets rời rạc (DWT)}
+
+\begin{equation}
+    f(x)=\frac{1}{\sqrt{N}}\left[\, T_{\varphi}(0,0)\,\varphi(x) + \sum_{j=0}^{J-1}\sum_{k=0}^{2^{j}-1} T_{\psi}(j,k)\,\psi_{j,k}(x) \right]
+\end{equation}
+
 \subsection{Phép biến đổi Wavelets nhanh (FWT)}
 \subsection{Phương pháp đóng gói Wavelets (Wavelets packet)}
 
