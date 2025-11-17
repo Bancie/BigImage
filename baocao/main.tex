@@ -64,7 +64,7 @@ Như ta đã biết, mọi hàm phức tạp $f(x)$ đều có thể được bi
 \end{equation}
 trong đó $f(x)$ được gọi là một hàm bất kỳ được thể hiện bằng cách biểu thị tuyến tính. $\phi_i(x)$ được gọi là hàm cơ sở và $a_i$ là hệ số trọng số với $n$ là số lượng hàm cơ sở $\phi(x)$ được dùng để biểu thị thành hàm $f(x)$.
 
-Từ ý tưởng này, 
+Từ ý tưởng này, ta có thể biễu diễn một hình ảnh bất kỳ dưới dạng tổ hợp tuyến tính của một hệ hàm cơ sở. Từ đó, ta định nghĩa hàm cơ sở, hay hàm Wavelets bằng công thức sau
 
 
 \begin{equation}
@@ -74,6 +74,28 @@ trong đó $\psi(t)$ được gọi là hàm Wavelet mẹ,
 $s$ là tỷ lệ hay mức tần số, tham số $\tau$ là tham số tịnh tiến, hệ số $2^{s/2}$ là hệ số chuẩn hoá.
 
 Từ phương trình trên ta thấy rằng khi $s$ lớn, ta thu được đồ thị với sóng Wavelet trải rộng, giúp ta phân tích được thông tin dưới dạng tần số thấp, từ đó nhìn được tín hiệu ở mức tổng quát. Ngược lại, khi $s$ nhỏ, ta thu được đồ thị với sóng Wavelet thu hẹp lại, giúp ta phân tích được thông tin dưới dạng tần số cao, từ đó dễ dàng thu được chi tiết sắc nét và biên cạnh
+
+Một ưu điểm quan trọng của phép biến đổi Wavelet là khả năng biểu diễn đồng thời thông tin về thời gian và tần số của tín hiệu. Trên mặt phẳng thời gian - tần số, mỗi hàm wavelet cơ sở tương ứng với một miền năng lượng cục bộ, thường được mô tả bằng một “ô Heisenberg” (Heisenberg box/cell). Diện tích và hình dạng của ô này phản ánh mức độ tập trung của hàm cơ sở: càng cục bộ bao nhiêu thì việc định vị vị trí xuất hiện của các thành phần tần số trong tín hiệu càng chính xác bấy nhiêu. Khác với các hàm cơ sở Fourier có năng lượng trải rộng trên toàn trục thời gian, khiến không thể truy vết được thời điểm xuất hiện của một tần số, các hàm Wavelet có hỗ trợ hữu hạn (hoặc gần–hữu–hạn) nên năng lượng tập trung trong những ô Heisenberg nhỏ. Nhờ đó, mỗi hệ số Wavelet không chỉ cho biết trong tín hiệu có thành phần tần số nào, mà còn cho ta thông tin về khoảng thời gian mà thành phần đó xuất hiện, giúp mô tả và phân tích hiệu quả các biến thiên cục bộ, biên cạnh và các chi tiết sắc nét của tín hiệu.
+
+\begin{equation}
+    \mu_t = \frac{1}{\|h(t)\|^2} \int_{-\infty}^{\infty} t\,|h(t)|^2 \, dt
+\end{equation}
+
+\begin{equation}
+    \sigma_t^2 = \frac{1}{\|h(t)\|^2} \int_{-\infty}^{\infty} (t - \mu_t)^2 |h(t)|^2 \, dt
+\end{equation}
+
+\begin{equation}
+    \mu_f = \frac{1}{\|H(f)\|^2} \int_{-\infty}^{\infty} f\,|H(f)|^2 \, df
+\end{equation}
+
+\begin{equation}
+    \sigma_f^2 = \frac{1}{\|H(f)\|^2} \int_{-\infty}^{\infty} (f - \mu_f)^2 |H(f)|^2 \, df
+\end{equation}
+
+\begin{equation}
+    \sigma_t^2 \sigma_f^2 \ge \frac{1}{16\pi^2}
+\end{equation}
 
 \subsubsection*{Ảnh cơ sở}
 
