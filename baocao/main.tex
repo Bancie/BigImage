@@ -35,7 +35,9 @@
 \usepackage{listings}
 
 % Package cua CB them vo
+\usepackage{tikz}
 \usetikzlibrary{calc}
+\usetikzlibrary{arrows.meta}
 
 \begin{document}
 \tableofcontents
@@ -82,12 +84,12 @@ Khi đó, năng lượng toàn phần của $h(t)$ được định nghĩa là
 \end{equation}
 với $|h(t)|^2$ là mật độ năng lượng tại thời điểm $t$.
 
-Để cho phép ta diễn giải $|h(t)|^2$ như một phân bổ năng lượng theo thời gian, ta cần xây dựng một hàm mật độ xác suất, ký hiệu hàm mật độ xác suất được xây dựng từ năng lượng của hàm cơ sở $h(t)$ là $p_h(t)$ với điều kiện
+Để cho phép ta diễn giải $|h(t)|^2$ như một phân bố năng lượng theo thời gian, ta cần xây dựng một hàm mật độ xác suất, ta ký hiệu hàm mật độ xác suất được xây dựng từ năng lượng của hàm cơ sở $h(t)$ là $p_h(t)$, với điều kiện
 \begin{equation} \label{dkhammatdoxacsuat}
     \int_{-\infty}^{\infty} p_h(t)\,dt = 1
 \end{equation}
 
-Từ \ref{nangluongtoanphan} và \ref{dkhammatdoxacsuat}, ta được hàm mật độ xác suất $p_h(t)$ được định nghĩa như sau
+Từ \ref{nangluongtoanphan} và \ref{dkhammatdoxacsuat}, ta thu được hàm mật độ xác suất $p_h(t)$ được định nghĩa như sau
 
 \begin{equation}
     p_h(t) = \frac{|h(t)|^{2}}{\|h(t)\|^{2}},
@@ -125,25 +127,72 @@ với phương sai
 \end{equation}
 hay
 \begin{equation}
-    \sigma_t^2 = \frac{1}{\|h(t)\|^2} \int_{-\infty}^{\infty} (t - \mu_t)^2 |h(t)|^2 \, dt
+    \sigma_t^2 = \frac{1}{\|h(t)\|^2} \int_{-\infty}^{\infty} (t - \mu_t)^2 |h(t)|^2 \, dt.
 \end{equation}
 
 Tương tự với miền tần số $f$, ta được
 \begin{equation}
-    \mu_f = \frac{1}{\|H(f)\|^2} \int_{-\infty}^{\infty} f\,|H(f)|^2 \, df
+    \mu_f = \frac{1}{\|H(f)\|^2} \int_{-\infty}^{\infty} f\,|H(f)|^2 \, df,
 \end{equation}
 
 \begin{equation}
-    \sigma_f^2 = \frac{1}{\|H(f)\|^2} \int_{-\infty}^{\infty} (f - \mu_f)^2 |H(f)|^2 \, df
+    \sigma_f^2 = \frac{1}{\|H(f)\|^2} \int_{-\infty}^{\infty} (f - \mu_f)^2 |H(f)|^2 \, df.
 \end{equation}
 
-Từ bốn đại lượng $\mu_t,\sigma_t,\mu_f,\sigma_f$ thu được ở trên, ta có thể đo được độ trải rộng của năng lượng từ hàm cơ sở trong cả miền thời gian và miền tần số.
+Từ bốn đại lượng $\mu_t,\sigma_t,\mu_f,\sigma_f$ thu được ở trên, ta có thể đo được mức độ phân bố của năng lượng từ hàm cơ sở trong cả miền thời gian và miền tần số.
 
 Tuy nhiên, nguyên lý bất định Heisenberg - Gabor chứng minh được rằng, ta không thể đồng thời làm cho hàm vừa tập trung rất hẹp trong miền thời gian và tập trung rất hẹp trong miền tần số. Nguyên lý bất định Heisenberg - Gabor được biểu diễn như sau
 \begin{equation}
-    \sigma_t^2 \sigma_f^2 \ge \frac{1}{16\pi^2},
+    \sigma_t^2 \sigma_f^2 \ge \frac{1}{16\pi^2}.
 \end{equation}
-nghĩa là tích $\sigma_t^{2}\sigma_f^{2}$ không thể nhỏ hơn $\frac{1}{16\pi^2}$, hay nói cách khác, luôn tồn tại một cận dưới cho mức độ cục bộ đồng thời của hàm trong hai miền. Trong đó dấu $=$ xảy ra khi và chỉ khi $h(t)$ là một hàm Gaussian.
+Nghĩa là tích $\sigma_t^{2}\sigma_f^{2}$ không thể nhỏ hơn $\frac{1}{16\pi^2}$, hay nói cách khác, luôn tồn tại một cận dưới cho mức độ phân bổ đồng thời của hàm trong hai miền. Trong đó, dấu bằng xảy ra khi và chỉ khi hàm cơ sở $h(t)$ là một hàm Gaussian. \ref{minhhoaphanbonltrongmptgiantanso}
+
+\begin{figure}[htbp!]
+  \centering
+  \begin{tikzpicture}[x=1cm,y=1cm,>=Stealth]
+    \definecolor{black}{RGB}{0,0,0}
+
+    % outer frame
+    \draw[thick,black] (0,0) -- (7,0) -- (7,5) -- (0,5) -- cycle;
+
+    % axes labels
+    \node at (3.5,-0.5) {$t$};
+    \node at (-1.5,2.5) {$f$};
+
+    % marginal p_h(t)
+    \draw[very thick,black]
+      plot [domain=4:6,samples=150,smooth]
+      (\x,{0.6*exp(-18*(\x-5)^2)});
+    \node[below right] at (5.5,1) {$p_h(t)$};
+
+    % marginal p_H(f)
+    \draw[very thick,black]
+      plot [domain=0:5,samples=150,smooth]
+      ({0.5*exp(-10*(\x-2.8)^2)},\x);
+    \node[left] at (2,2.9) {$p_H(f)$};
+
+    % mu labels
+    \node[below] at (5,-0.15) {$\mu_t$};
+    \node[left] at (-0.05,2.8) {$\mu_f$};
+
+    % uncertainty rectangle
+    \filldraw[fill=black!25,draw=black,thick] (4.7,2.2) rectangle (5.3,3.4);
+    \node at (5,2.8) {$+$};
+
+    % dashed guides
+    \foreach \y in {2.2,2.8,3.4}
+      \draw[dashed,gray] (0,\y) -- (7,\y);
+    \foreach \x in {4.7,5,5.3}
+      \draw[dashed,gray] (\x,0) -- (\x,5);
+
+    % sigma annotations
+    \draw[<->,dashed] (4.7,3.55) -- node[above] {$2\sigma_t$} (5.3,3.55);
+    \draw[<->,dashed] (5.45,2.2) -- node[right] {$2\sigma_f$} (5.45,3.4);
+
+  \end{tikzpicture}
+  \caption{Phân bố năng lượng của hàm cơ sở trong mặt phẳng thời gian - tần số. \label{minhhoaphanbonltrongmptgiantanso}}
+\end{figure}
+
 
 \subsubsection*{Ảnh cơ sở}
 
